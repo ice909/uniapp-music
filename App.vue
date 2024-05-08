@@ -1,15 +1,7 @@
-<script>
-	export default {
-		onLaunch: function() {
-			console.log('App Launch')
-		},
-		onShow: function() {
-			console.log('App Show')
-		},
-		onHide: function() {
-			console.log('App Hide')
-		}
-	}
+<script setup>
+	import {
+		reactive
+	} from 'vue'
 </script>
 
 <style lang="scss">
@@ -17,6 +9,9 @@
 	@import '@/uni_modules/uni-scss/index.scss';
 	/* #ifndef APP-NVUE */
 	@import '@/static/customicons.css';
+	@import "colorui/main.css";
+	@import "colorui/icon.css";
+
 	// 设置整个项目的背景色
 	page {
 		background-color: #f5f5f5;
