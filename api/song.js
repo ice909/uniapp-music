@@ -6,3 +6,19 @@ export const personalizedNewsong = (options) => {
 		data: options
 	})
 }
+
+export const songUrl = (id) => {
+	return request({
+		url: "/song/url",
+		method: "GET",
+		data: id
+	})
+}
+
+export const songDetail = (ids) => {
+	return request({
+		url: "/song/detail",
+		method: "GET",
+		data: ids
+	})
+}

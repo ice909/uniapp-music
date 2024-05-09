@@ -3,7 +3,7 @@
 		<view class="title">{{title}}</view>
 		<scroll-view scroll-x class="scroll-view">
 			<view class="list">
-				<view class="item" v-for="(item, index) in list" :key="index">
+				<view class="item" v-for="(item, index) in list" :key="index" @click="playSong(item)">
 					<img class="pic" :src="item.picUrl" />
 					<view class="info">
 						<text class="name">{{item.name}}</text>
@@ -21,6 +21,7 @@
 </template>
 
 <script setup>
+	import { usePlayerStore } from '../../store/player';
 	defineProps({
 		title: {
 			type: String
@@ -29,8 +30,9 @@
 			type: Array
 		}
 	})
-	const getArtists = (artists) => {
-		return
+	const playerStore = usePlayerStore()
+	const playSong = (item) => {
+		playerStore.addSongToPlaylist(item,true)
 	}
 </script>
 

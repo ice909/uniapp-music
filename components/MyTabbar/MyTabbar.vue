@@ -10,7 +10,7 @@
 					style="margin-top:2px">首页</view>
 			</view>
 			<view class="action add-action" @click="handleToPlay">
-				<image :src="playerStore.currentCover" mode="" class="music-img"
+				<image :src="playerStore.currentTrackInfo.picUrl" mode="" class="music-img"
 					:style="{ transform: 'rotate(' + rotate + 'deg)' }"></image>
 			</view>
 			<view class="action" @click="handleToMy">
@@ -43,7 +43,9 @@
 	}
 	const handleToPlay = () => {
 		uni.navigateTo({
-			url: "/pages/player/player"
+			url: "/pages/player/player",
+			animationType: "slide-in-bottom",
+			animationDuration: 3000
 		})
 	}
 	const handleToMy = () => {
