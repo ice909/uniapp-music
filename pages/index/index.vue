@@ -1,21 +1,55 @@
 <template>
-	<view class="container">
-		<view class="intro">本项目已包含uni ui组件，无需import和注册，可直接使用。在代码区键入字母u，即可通过代码助手列出所有可用组件。光标置于组件名称处按F1，即可查看组件文档。</view>
-		<text class="intro">详见：</text>
-		<uni-link :href="href" :text="href"></uni-link>
+	<view>
+		<view class="content">
+			<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
+				<swiper-item v-for="(item,index) in banners.banners" :key="index">
+					<image class="banner-img" style="width: 100%;height: 100%;" :src="item.imageUrl"></image>
+				</swiper-item>
+			</swiper>
+
+			<PlaylistScroll v-if="personalizeds" title="推荐歌单" :list="personalizeds.result"></PlaylistScroll>
+		</view>
 		<MyTabbar path="index"></MyTabbar>
 	</view>
 </template>
 
 <script setup>
-	import { ref } from "vue"
-	const href = ref('https://uniapp.dcloud.io/component/README?id=uniui')
+	import {
+		ref
+	} from "vue"
+	import {
+		banner
+	} from "@/api/banner.js"
+	import {
+		personalized
+	} from "@/api/playlist.js"
+	import {
+		onLoad
+	} from "@dcloudio/uni-app"
+	const banners = ref([])
+	const personalizeds = ref()
+	onLoad(async () => {
+		banners.value = await banner({
+			type: 0
+		})
+		personalizeds.value = await personalized({
+			limit: 8,
+			offset: 0
+		})
+		console.log(banners.value)
+		console.log(personalizeds.value)
+	})
 </script>
 
 <style lang="scss">
-	.container {
-		font-size: 14px;
-		line-height: 14px;
+	.content {
+		padding: 10px;
+		padding-bottom: 60px;
+
+		.banner-img {
+			border-radius: 10px;
+		}
+
+
 	}
-	
 </style>
