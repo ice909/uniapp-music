@@ -8,6 +8,7 @@
 			</swiper>
 
 			<PlaylistScroll v-if="personalizeds" title="推荐歌单" :list="personalizeds.result"></PlaylistScroll>
+			<SongScroll v-if="personalizedNewSongs" title="推荐新歌" :list="personalizedNewSongs.result"></SongScroll>
 		</view>
 		<MyTabbar path="index"></MyTabbar>
 	</view>
@@ -24,10 +25,14 @@
 		personalized
 	} from "@/api/playlist.js"
 	import {
+		personalizedNewsong
+	} from "@/api/song.js"
+	import {
 		onLoad
 	} from "@dcloudio/uni-app"
 	const banners = ref([])
 	const personalizeds = ref()
+	const personalizedNewSongs = ref()
 	onLoad(async () => {
 		banners.value = await banner({
 			type: 0
@@ -36,8 +41,10 @@
 			limit: 8,
 			offset: 0
 		})
+		personalizedNewSongs.value = await personalizedNewsong({limit: 9})
 		console.log(banners.value)
 		console.log(personalizeds.value)
+		console.log(personalizedNewSongs.value)
 	})
 </script>
 

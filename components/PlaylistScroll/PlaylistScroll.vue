@@ -26,7 +26,7 @@
 
 <style lang="scss">
 	.title {
-		margin: 5px;
+		margin: 10px;
 		font-size: 20px;
 		font-weight: 700;
 	}
@@ -46,7 +46,7 @@
 				}
 
 				.text {
-					font-size: 8px;
+					font-size: 12px;
 					display: -webkit-box;
 					-webkit-box-orient: vertical;
 					-webkit-line-clamp: 2;
