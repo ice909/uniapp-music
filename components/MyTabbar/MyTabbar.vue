@@ -60,13 +60,13 @@
 <style lang="scss">
 	.music-img {
 		position: absolute;
-		width: 35px;
+		width: 40px;
 		z-index: 2;
-		height: 35px;
+		height: 40px;
 		border-radius: 50%;
-		line-height: 35px;
-		font-size: 25px;
-		top: -17px;
+		line-height: 40px;
+		font-size: 30px;
+		top: -20px;
 		left: 0;
 		right: 0;
 		margin: auto;
