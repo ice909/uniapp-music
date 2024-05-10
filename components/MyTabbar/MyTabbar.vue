@@ -39,7 +39,7 @@
 	const rotate = ref(0)
 	const playerStore = usePlayerStore()
 	const handleToHome = () => {
-		uni.navigateTo({
+		uni.redirectTo({
 			url: "/pages/index/index"
 		})
 	}
@@ -51,7 +51,7 @@
 		})
 	}
 	const handleToMy = () => {
-		uni.navigateTo({
+		uni.redirectTo({
 			url: "/pages/my/my"
 		})
 	}
