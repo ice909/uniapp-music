@@ -41,6 +41,9 @@ export const usePlayerStore = defineStore('player', () => {
       playState.value = false;
       console.log('音乐停止播放了', 'playState: ' + playState.value);
     });
+    player.onEnded(() => {
+      next();
+    });
     player.onTimeUpdate(() => {
       position.value = player.currentTime;
       positionStr.value = formatDuration(position.value);
@@ -60,7 +63,6 @@ export const usePlayerStore = defineStore('player', () => {
   };
 
   const play = () => {
-    console.log(playlist.value);
     songUrl({
       id: playlist.value[currentIndex.value].id,
     }).then((res) => {
@@ -80,6 +82,13 @@ export const usePlayerStore = defineStore('player', () => {
     } else {
       player.play();
     }
+  };
+
+  const next = () => {
+    if (playlist.value.length === 0) return;
+    // 暂时只支持列表循环
+    currentIndex.value = (currentIndex.value + 1) % playlist.value.length;
+    play();
   };
   const seek = (position) => {
     player.seek(position);
@@ -145,6 +154,7 @@ export const usePlayerStore = defineStore('player', () => {
     play,
     pause,
     playOrPause,
+    next,
     seek,
     addSongToPlaylist,
   };
