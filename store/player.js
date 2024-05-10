@@ -93,6 +93,10 @@ export const usePlayerStore = defineStore('player', () => {
   const seek = (position) => {
     player.seek(position);
   };
+  /*
+   * 播放指定索引的歌曲
+   * @param {Number} index 歌曲索引
+   */
   const playAtIndex = (index) => {
     currentIndex.value = index;
     play();
@@ -145,6 +149,7 @@ export const usePlayerStore = defineStore('player', () => {
     playlist,
     playlistModel,
     currentTrackInfo,
+    currentIndex,
     position,
     duration,
     positionStr,
@@ -157,5 +162,6 @@ export const usePlayerStore = defineStore('player', () => {
     next,
     seek,
     addSongToPlaylist,
+    playAtIndex,
   };
 });

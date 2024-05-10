@@ -66,7 +66,9 @@
             hover-stay-time="50"
             class="song"
             v-for="(item, index) in playerStore.playlistModel"
+            :class="{ active: index === playerStore.currentIndex }"
             :key="index"
+            @click="playerStore.playAtIndex(index)"
           >
             <image class="pic" :src="item.picUrl"></image>
             <view class="info">
@@ -259,6 +261,10 @@ const seek = (e) => {
         .duration {
           margin: 5px;
           font-size: 12px;
+        }
+
+        &.active {
+          color: $uni-primary;
         }
       }
     }
