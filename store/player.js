@@ -61,7 +61,7 @@ export const usePlayerStore = defineStore('player', () => {
 			let intervalID = setInterval(function() {
 				if (player.duration !== 0) {
 					duration.value = player.duration
-					console.log(player.duration)
+					// console.log(player.duration)
 					durationStr.value = formatDuration(duration.value)
 					clearInterval(intervalID);
 				}
@@ -90,6 +90,9 @@ export const usePlayerStore = defineStore('player', () => {
 		} else {
 			player.play();
 		}
+	}
+	const seek = (position) => {
+		player.seek(position)
 	}
 	const playAtIndex = (index) => {
 		currentIndex.value = index
@@ -121,6 +124,8 @@ export const usePlayerStore = defineStore('player', () => {
 	})
 	return {
 		player,
+		playlist,
+		playlistModel,
 		currentTrackInfo,
 		position,
 		duration,
@@ -131,6 +136,7 @@ export const usePlayerStore = defineStore('player', () => {
 		play,
 		pause,
 		playOrPause,
+		seek,
 		addSongToPlaylist,
 	};
 });

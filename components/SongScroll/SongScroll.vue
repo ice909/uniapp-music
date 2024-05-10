@@ -3,7 +3,7 @@
 		<view class="title">{{title}}</view>
 		<scroll-view scroll-x class="scroll-view">
 			<view class="list">
-				<view class="item" v-for="(item, index) in list" :key="index" @click="playSong(item)">
+				<view hover-class="click-hover" hover-stay-time="50" class="item" v-for="(item, index) in list" :key="index" @click="playSong(item)">
 					<img class="pic" :src="item.picUrl" />
 					<view class="info">
 						<text class="name">{{item.name}}</text>
@@ -32,7 +32,14 @@
 	})
 	const playerStore = usePlayerStore()
 	const playSong = (item) => {
-		playerStore.addSongToPlaylist(item,true)
+		playerStore.addSongToPlaylist({
+			id: item.id,
+			name: item.name,
+			picUrl: item.picUrl,
+			album: item.song.album.name,
+			artists: item.song.artists[0].name,
+			duration: item.song.duration
+		},true)
 	}
 </script>
 
@@ -53,7 +60,6 @@
 
 			.item {
 				display: flex;
-				background-color: #f7f7f7;
 				padding: 5px;
 				border-radius: 5px;
 				box-shadow: $uni-shadow-sm;

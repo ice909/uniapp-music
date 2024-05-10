@@ -50,6 +50,7 @@
 
 <style lang="scss">
 	.content {
+		height: 100%;
 		padding: 10px;
 		padding-bottom: 60px;
 

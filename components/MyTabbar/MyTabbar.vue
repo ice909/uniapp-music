@@ -1,33 +1,35 @@
 <template>
-	<view>
-		<view class="cu-bar tabbar bg-white shadow foot">
-			<view class="action" @click="handleToHome">
-				<view class="cuIcon-cu-image">
-					<image :src="'/static/' + [path == 'index' ? 'index-active' : 'index'] + '.png'">
-					</image>
-				</view>
-				<view :class="path == 'index' ? 'tabbar-text-active-color' : 'tabbar-text-color'"
-					style="margin-top:2px">首页</view>
+	<view class="cu-bar tabbar bg-white shadow foot">
+		<view class="action" @click="handleToHome">
+			<view class="cuIcon-cu-image">
+				<image :src="'/static/' + [path == 'index' ? 'index-active' : 'index'] + '.png'">
+				</image>
 			</view>
-			<view class="action add-action" @click="handleToPlay">
-				<image :src="playerStore.currentTrackInfo.picUrl" mode="" class="music-img"
-					:style="{ transform: 'rotate(' + rotate + 'deg)' }"></image>
+			<view :class="path == 'index' ? 'tabbar-text-active-color' : 'tabbar-text-color'" style="margin-top:2px">首页
 			</view>
-			<view class="action" @click="handleToMy">
-				<view class="cuIcon-cu-image">
-					<image :src="'/static/' + [path == 'my' ? 'my-active' : 'my'] + '.png'"></image>
-				</view>
-				<view :class="path == 'my' ? 'tabbar-text-active-color' : 'tabbar-text-color'"
-					style="margin-top:2px">我的</view>
+		</view>
+		<view class="action add-action" @click="handleToPlay">
+			<image :src="playerStore.currentTrackInfo.picUrl" mode="" class="music-img"
+				:style="{ transform: 'rotate(' + rotate + 'deg)' }"></image>
+		</view>
+		<view class="action" @click="handleToMy">
+			<view class="cuIcon-cu-image">
+				<image :src="'/static/' + [path == 'my' ? 'my-active' : 'my'] + '.png'"></image>
+			</view>
+			<view :class="path == 'my' ? 'tabbar-text-active-color' : 'tabbar-text-color'" style="margin-top:2px">我的
 			</view>
 		</view>
 	</view>
 </template>
 
 <script setup>
-	import { ref } from "vue"
-	import { usePlayerStore } from "../../store/player";
-	
+	import {
+		ref
+	} from "vue"
+	import {
+		usePlayerStore
+	} from "../../store/player";
+
 	defineProps({
 		path: {
 			type: String,
@@ -45,7 +47,7 @@
 		uni.navigateTo({
 			url: "/pages/player/player",
 			animationType: "slide-in-bottom",
-			animationDuration: 3000
+			animationDuration: 500
 		})
 	}
 	const handleToMy = () => {
