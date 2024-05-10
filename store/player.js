@@ -103,9 +103,7 @@ export const usePlayerStore = defineStore('player', () => {
   };
   const addSongToPlaylist = (item, isPlay = false) => {
     if (playlistId.value !== 'single') {
-      playlist.value = [];
-      playlistModel.value = [];
-      currentIndex.value = -1;
+      clearPlaylist();
     }
     // 重复歌曲移动到最后，不重复添加
     let index = playlist.value.findIndex((v) => v.id === item.id);
@@ -127,6 +125,39 @@ export const usePlayerStore = defineStore('player', () => {
       playAtIndex(playlist.value.length - 1);
     }
   };
+  /**
+   * 添加播放列表歌曲到播放列表，并播放
+   * @param id 歌单id
+   * @param songs 歌曲信息
+   * @param index 要播放的歌曲下标
+   * @param loadAll 歌单歌曲是否全部加载
+   * @returns
+   */
+  function addTracks(id, songs, index, loadAll = true) {
+    if (playlistId.value === id && loadAll) {
+      if (index === -1) {
+        playAtIndex(0);
+      } else {
+        playAtIndex(index);
+      }
+      return;
+    }
+    // 执行到这里，说明是新的歌单
+    clearPlaylist();
+    playlistId.value = id;
+    songs.forEach((v) => {
+      playlist.value.push({ id: v.id });
+      playlistModel.value.push(v);
+    });
+    if (index === -1) {
+      playAtIndex(0);
+    } else {
+      playAtIndex(index);
+    }
+  }
+  /*
+   * 更新当前播放歌曲信息
+   */
   const updateSongInfo = () => {
     currentTrackInfo.value = playlistModel.value[currentIndex.value];
   };
@@ -144,6 +175,13 @@ export const usePlayerStore = defineStore('player', () => {
       deep: true,
     }
   );
+
+  const clearPlaylist = () => {
+    playlist.value = [];
+    playlistModel.value = [];
+    currentIndex.value = -1;
+    playlistId.value = null;
+  };
   return {
     player,
     playlist,
@@ -162,6 +200,7 @@ export const usePlayerStore = defineStore('player', () => {
     next,
     seek,
     addSongToPlaylist,
+    addTracks,
     playAtIndex,
   };
 });

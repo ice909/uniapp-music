@@ -21,6 +21,14 @@
 			"navigationStyle": "custom",
 			"enablePullDownRefresh" : false
 		}
+	},
+	{
+		"path" : "pages/playlist/playlist",
+		"style" : 
+		{
+			"navigationStyle": "custom",
+			"enablePullDownRefresh" : false
+		}
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

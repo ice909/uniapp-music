@@ -3,7 +3,8 @@
 		<view class="title">{{title}}</view>
 		<scroll-view scroll-x class="scroll-view">
 			<view class="list">
-				<view class="item" v-for="(item, index) in list" :key="index">
+				<view hover-class="click-hover"
+				hover-stay-time="50" class="item" v-for="(item, index) in list" :key="index" @click="toPlaylist(item)">
 					<img class="pic" :src="item.picUrl" />
 					<text class="text">{{item.name}}</text>
 				</view>
@@ -22,6 +23,11 @@
 			type: Array
 		}
 	})
+	const toPlaylist = (item) => {
+		uni.navigateTo({
+			url: `/pages/playlist/playlist?id=${item.id}`
+		})
+	}
 </script>
 
 <style lang="scss">
@@ -37,7 +43,9 @@
 			display: flex;
 
 			.item {
+				padding: 5px;
 				margin-right: 10px;
+				border-radius: 10px;
 
 				.pic {
 					width: 90px;

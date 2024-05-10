@@ -6,3 +6,10 @@ export const personalized = (options) => {
 		data: options
 	})
 }
+export const playlistDetail = (options) => {
+	return request({
+		url: "/playlist/detail",
+		method: "GET",
+		data: options
+	})
+}

@@ -60,7 +60,7 @@
             @click="closeList"
           ></uni-icons>
         </view>
-        <scroll-view class="popup-scroll">
+        <scroll-view scroll-y class="popup-scroll">
           <view
             hover-class="click-hover"
             hover-stay-time="50"
@@ -70,7 +70,7 @@
             :key="index"
             @click="playerStore.playAtIndex(index)"
           >
-            <image class="pic" :src="item.picUrl"></image>
+            <image class="pic" lazy-load :src="item.picUrl"></image>
             <view class="info">
               <text class="name">{{ item.name }}</text>
               <text class="author">{{ item.artists }}</text>
@@ -264,7 +264,7 @@ const seek = (e) => {
         }
 
         &.active {
-          color: $uni-primary;
+          background-color: #e2d4f9;
         }
       }
     }
