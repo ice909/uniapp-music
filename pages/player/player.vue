@@ -1,6 +1,6 @@
 <template>
   <page-meta
-    :page-style="'overflow:' + (popupShow ? 'hidden' : 'visible')"
+    :page-style="'overflow:' + (playlistQueueShow ? 'hidden' : 'visible')"
   ></page-meta>
   <view class="player-page">
     <uni-nav-bar
@@ -48,52 +48,20 @@
         </button>
       </view>
     </view>
-    <uni-popup ref="popup" @change="change">
-      <view class="popup-content">
-        <view class="header">
-          <text class="title">播放列表</text>
-          <text class="count">共有{{ playerStore.playlist.length }}首歌曲</text>
-          <uni-icons
-            class="close-btn"
-            type="down"
-            size="25"
-            @click="closeList"
-          ></uni-icons>
-        </view>
-        <scroll-view scroll-y class="popup-scroll">
-          <view
-            hover-class="click-hover"
-            hover-stay-time="50"
-            class="song"
-            v-for="(item, index) in playerStore.playlistModel"
-            :class="{ active: index === playerStore.currentIndex }"
-            :key="index"
-            @click="playerStore.playAtIndex(index)"
-          >
-            <image class="pic" lazy-load :src="item.picUrl"></image>
-            <view class="info">
-              <text class="name">{{ item.name }}</text>
-              <text class="author">{{ item.artists }}</text>
-            </view>
-            <text class="album">{{ item.album }}</text>
-            <text class="duration">{{
-              formatDuration(item.duration, true)
-            }}</text>
-          </view>
-        </scroll-view>
-      </view>
-    </uni-popup>
+
+    <PlayerQueue
+      v-show="playlistQueueShow"
+      @closeList="closeList"
+    ></PlayerQueue>
   </view>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { usePlayerStore } from '@/store/player.js';
-import { formatDuration } from '@/utils/format.js';
 
 const playerStore = usePlayerStore();
-const popup = ref(null);
-const popupShow = ref(false);
+const playlistQueueShow = ref(false);
 
 const playOrPause = () => {
   playerStore.playOrPause();
@@ -109,13 +77,10 @@ const back = () => {
   });
 };
 const showList = () => {
-  popup.value.open('bottom');
+  playlistQueueShow.value = true;
 };
 const closeList = () => {
-  popup.value.close();
-};
-const change = (e) => {
-  popupShow.value = e.show;
+  playlistQueueShow.value = false;
 };
 const seek = (e) => {
   playerStore.seek(e.detail.value);
