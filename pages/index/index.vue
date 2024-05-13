@@ -52,7 +52,7 @@
 	.content {
 		height: 100%;
 		padding: 10px;
-		padding-bottom: 60px;
+		padding-bottom: 100px;
 
 		.banner-img {
 			border-radius: 10px;
