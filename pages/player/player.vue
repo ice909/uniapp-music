@@ -29,18 +29,16 @@
       </view>
       <view class="btns">
         <button class="btn"></button>
-        <button class="btn">
+        <button class="btn" @click="playerStore.previous()">
           <image class="icon" src="/static/previous.png"></image>
         </button>
-        <button class="btn play" @click="playOrPause">
+        <button class="btn play" @click="playerStore.playOrPause()">
           <image
             class="icon"
-            :src="
-              playerStore.playState ? '/static/pause.png' : '/static/play.png'
-            "
+            :src="playerStore.playState ? '/static/pause.png' : '/static/play.png'"
           ></image>
         </button>
-        <button class="btn" @click="next">
+        <button class="btn" @click="playerStore.next()">
           <image class="icon" src="/static/next.png"></image>
         </button>
         <button @click="showList" class="btn list">
@@ -49,27 +47,16 @@
       </view>
     </view>
 
-    <PlayerQueue
-      v-show="playlistQueueShow"
-      @closeList="closeList"
-    ></PlayerQueue>
+    <PlayerQueue v-show="playlistQueueShow" @closeList="closeList"></PlayerQueue>
   </view>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { usePlayerStore } from '@/store/player.js';
+import { ref } from "vue";
+import { usePlayerStore } from "@/store/player.js";
 
 const playerStore = usePlayerStore();
 const playlistQueueShow = ref(false);
-
-const playOrPause = () => {
-  playerStore.playOrPause();
-};
-
-const next = () => {
-  playerStore.next();
-};
 
 const back = () => {
   uni.navigateBack({

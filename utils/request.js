@@ -1,13 +1,13 @@
-const baseUrl = "http://47.237.19.173:4000"
-const request = (options = {}) => {
+const baseUrl = "http://api.aiice.top"
+
+let cookie = ''
+
+export const request = (options = {}) => {
 	return new Promise((resolve, reject) => {
 		uni.request({
 			url: baseUrl + options.url,
 			method: options.method,
 			data: options.data,
-			header: {
-				'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
-			},
 			success: (response) => {
 				return resolve(response.data)
 			},
@@ -17,5 +17,41 @@ const request = (options = {}) => {
 		})
 	})
 }
+// 新的封装，之后会移除上面的request
+export const get = (
+  url,
+  params,
+  requireCookie = false,
+  noCache = false
+) => {
+	if (!cookie) cookie = uni.getStorageSync('cookie')
+	
+	url = baseUrl + url
 
-export default request;
+  return new Promise(resolve => {
+    const data = params
+    if (noCache) data.timestamp = new Date().getTime()
+    if (requireCookie && cookie) data.cookie = encodeURIComponent(cookie)
+
+    const uniReq = uni.request({
+      url,
+      data,
+      method: 'GET',
+      // withCredentials: true,
+      sslVerify: true,
+      header: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+
+    uniReq
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((err) => {
+        resolve(err)
+      })
+  })
+}

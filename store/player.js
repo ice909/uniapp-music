@@ -84,6 +84,13 @@ export const usePlayerStore = defineStore('player', () => {
     }
   };
 
+  const previous = () => {
+    if (playlist.value.length === 0) return;
+    // 暂时只支持列表循环
+    currentIndex.value = (currentIndex.value - 1 + playlist.value.length) % playlist.value.length;
+    play();
+   }
+
   const next = () => {
     if (playlist.value.length === 0) return;
     // 暂时只支持列表循环
@@ -197,6 +204,7 @@ export const usePlayerStore = defineStore('player', () => {
     play,
     pause,
     playOrPause,
+    previous,
     next,
     seek,
     addSongToPlaylist,
