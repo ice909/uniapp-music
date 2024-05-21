@@ -1,10 +1,17 @@
-import { request, get} from '@/utils/request.js';
+import { request, get } from '@/utils/request.js';
 
 /*
-  *登录状态
+ *登录状态
  */
-export function loginStatus() { 
+export function loginStatus() {
   return get('/login/status', {}, true, true);
+}
+
+/*
+ *获取用户账号
+ */
+export function userAccount() {
+  return get('/user/account', {}, true, true);
 }
 
 /*
@@ -16,8 +23,8 @@ export function captchaSent(phone) {
     url: '/captcha/sent',
     method: 'GET',
     data: {
-      "phone": phone,
-      "timestamp": new Date().getTime()
+      phone: phone,
+      timestamp: new Date().getTime(),
     },
   });
 }
@@ -32,9 +39,9 @@ export function loginCellphone(phone, captcha) {
     url: '/login/cellphone',
     method: 'GET',
     data: {
-      "phone": phone,
-      "captcha": captcha,
-      "timestamp": new Date().getTime()
+      phone: phone,
+      captcha: captcha,
+      timestamp: new Date().getTime(),
     },
   });
 }
@@ -47,8 +54,32 @@ export function userDetail(uid) {
     url: '/user/detail',
     method: 'GET',
     data: {
-      "uid": uid,
-      "timestamp": new Date().getTime()
+      uid: uid,
+      timestamp: new Date().getTime(),
     },
   });
+}
+
+/*
+ *获取二维码key
+ */
+export function qrKey() {
+  return get('/login/qr/key', {}, false, true);
+}
+
+/*
+ *获取二维码
+ * @param key 二维码key
+ * @param qrimg 传入后会额外返回二维码图片base64编码
+ */
+export function qrCreate(key) {
+  return get('/login/qr/create', { key: key, qrimg: 1 }, false, true);
+}
+
+/*
+ *二维码检测扫码状态
+ * @param key 二维码key
+ */
+export function qrCheck(key) {
+  return get('/login/qr/check', { key: key }, false, true);
 }

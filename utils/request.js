@@ -1,4 +1,4 @@
-const baseUrl = "http://api.aiice.top"
+const baseUrl = "http://47.237.19.173:4000"
 
 let cookie = ''
 

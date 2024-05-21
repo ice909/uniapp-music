@@ -1,7 +1,7 @@
 <template>
   <view class="login-page">
-    <!-- 手机号登录 -->
-    <uni-card style="width: 100%" title="手机号登录" is-shadow>
+    <!-- 手机号登录暂时不可用，使用二维码登录 -->
+    <!-- <uni-card style="width: 100%" title="手机号登录" is-shadow>
       <view class="login-card">
         <view class="login-input">
           <text class="text">手机号</text>
@@ -42,22 +42,69 @@
           登录
         </button>
       </view>
-    </uni-card>
+    </uni-card> -->
+    <view class="login-card">
+      <image style="width: 400rpx; height: 400rpx" :src="qrCodeBase64"></image>
+      <view>{{ qrStatus }}</view>
+    </view>
   </view>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { onLoad, onUnload } from "@dcloudio/uni-app";
 import { useUserStore } from "@/store/user.js";
-import { captchaSent, loginCellphone } from "@/api/user.js";
+import { captchaSent, loginCellphone, qrKey, qrCreate, qrCheck } from "@/api/user.js";
 
 const user = useUserStore();
 
+const qrKeyStr = ref();
+const qrCodeBase64 = ref();
+const qrInterval = ref();
+const qrStatus = ref("请打开云音乐 APP 扫码登录");
 const phone = ref();
 const code = ref();
 const sendCodeDisabled = ref(true);
 const loginBtnDisabled = ref(true);
 const sendBtnText = ref("发送");
+
+onLoad(async () => {
+  const { data } = await qrKey();
+  console.log(data);
+  qrKeyStr.value = data.unikey;
+  const res = await qrCreate(qrKeyStr.value);
+  qrCodeBase64.value = res.data.qrimg;
+  checkQrStatus();
+});
+
+onUnload(() => {
+  clearInterval(qrInterval.value);
+});
+
+const checkQrStatus = async () => {
+  qrInterval.value = setInterval(async () => {
+    const res = await qrCheck(qrKeyStr.value);
+    console.log(res);
+    switch (res.code) {
+      case 800: // 二维码过期
+        qrStatus.value = "二维码已过期";
+        clearInterval(qrInterval.value);
+        break;
+      case 801: // 等待扫码
+        qrStatus.value = "请打开云音乐 APP 扫码登录";
+        break;
+      case 802: // 已扫描
+        qrStatus.value = "已扫描，请确认登录";
+        break;
+      case 803: // 已确认登录
+        clearInterval(qrInterval.value);
+        uni.setStorageSync("cookie", res.cookie);
+        await user.getUserInfo();
+        uni.navigateBack();
+        break;
+    }
+  }, 1000);
+};
 
 const sendCode = () => {
   console.log(phone.value);

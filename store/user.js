@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { userDetail, loginStatus } from '@/api/user';
+import { userDetail, loginStatus,userAccount } from '@/api/user';
 import { getUserPlaylist } from '@/api/playlist.js';
 
 export const useUserStore = defineStore('user', () => {
@@ -19,12 +19,7 @@ export const useUserStore = defineStore('user', () => {
 		const { data } = await loginStatus();
 		console.log(data)
 		if (data.profile) {
-			const { profile } = data;
-			id.value = profile.userId;
-			nickname.value = profile.nickname;
-			avatar.value = profile.avatarUrl;
 			await getUserInfo();
-			isLogin.value = true;
 		} else {
 			console.log("还未登录")
 			isLogin.value = false;
@@ -38,12 +33,16 @@ export const useUserStore = defineStore('user', () => {
 	}
 
 	const getUserInfo = async () => { 
-		const res = await userDetail(id.value);
-		if (res.code === 200) {
-			const { profile } = res;
+		const { profile, code } = await userAccount();
+		if (code === 200) {
+			isLogin.value = true;
+			id.value = profile.userId;
 			avatar.value = profile.avatarUrl;
-			follows.value = profile.follows;
-			followeds.value = profile.followeds;
+			nickname.value = profile.nickname;
+			// 获取用户详情
+			const res = await userDetail(id.value);
+			follows.value = res.profile.follows;
+			followeds.value = res.profile.followeds;
 			level.value = res.level;
 			// 获取用户歌单
 			const resp = await getUserPlaylist(id.value);
