@@ -25,6 +25,8 @@
             >
           </view>
 
+          <view style="flex: 1"></view>
+
           <view class="buttons">
             <button size="mini" type="primary" @click="playAll">播放全部</button>
           </view>
