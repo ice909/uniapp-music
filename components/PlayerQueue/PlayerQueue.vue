@@ -14,14 +14,20 @@
           ></uni-icons>
         </view>
         <scroll-view scroll-y class="queue-scroll">
+          <!-- 分页，避免卡顿 -->
           <view
             hover-class="click-hover"
             hover-stay-time="50"
             class="song"
-            v-for="(item, index) in playerStore.playlistModel"
-            :class="{ active: index === playerStore.currentIndex }"
+            v-for="(item, index) in playerStore.playlistModel.slice(
+              (pageNumber - 1) * 30,
+              pageNumber * 30
+            )"
+            :class="{
+              active: playerStore.currentIndex === index + (pageNumber - 1) * 30,
+            }"
             :key="index"
-            @click="playerStore.playAtIndex(index)"
+            @click="playerStore.playAtIndex(index + (pageNumber - 1) * 30)"
           >
             <image class="pic" lazy-load :src="item.picUrl"></image>
             <view class="info">
@@ -29,10 +35,14 @@
               <text class="author">{{ item.artists }}</text>
             </view>
             <text class="album">{{ item.album }}</text>
-            <text class="duration">{{
-              formatDuration(item.duration, true)
-            }}</text>
+            <text class="duration">{{ formatDuration(item.duration, true) }}</text>
           </view>
+          <uni-pagination
+            style="margin-top: 10px"
+            v-model="pageNumber"
+            :pageSize="30"
+            :total="playerStore.playlist.length"
+          />
         </scroll-view>
       </view>
     </view>
@@ -40,13 +50,16 @@
 </template>
 
 <script setup>
-import { usePlayerStore } from '@/store/player.js';
-import { formatDuration } from '@/utils/format.js';
-const emit = defineEmits(['closeList']);
+import { ref } from "vue";
+import { usePlayerStore } from "@/store/player.js";
+import { formatDuration } from "@/utils/format.js";
+const emit = defineEmits(["closeList"]);
 const playerStore = usePlayerStore();
 
+const pageNumber = ref(1);
+
 const closeList = () => {
-  emit('closeList');
+  emit("closeList");
 };
 </script>
 
@@ -103,8 +116,10 @@ const closeList = () => {
     }
 
     .queue-scroll {
+      box-sizing: border-box;
       height: 100%;
       padding: 5px;
+      padding-bottom: 50px;
 
       .song {
         display: flex;
