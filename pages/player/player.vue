@@ -12,7 +12,8 @@
       background-color="rbga(0, 0, 0, 0)"
     ></uni-nav-bar>
     <view class="cover">
-      <image class="pic" :src="playerStore.currentTrackInfo.picUrl"></image>
+      <image class="pic" :src="playerStore.currentTrackInfo.picUrl"  style="transition: transform 1s;"
+		  :style="{ transform: 'rotate(' + playerStore.rotate + 'deg)' }"></image>
     </view>
     <!-- 底部控制栏 -->
     <view class="control">

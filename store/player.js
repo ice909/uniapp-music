@@ -27,19 +27,29 @@ export const usePlayerStore = defineStore('player', () => {
 
   // 播放状态
   const playState = ref(false);
+  
+  const timer = ref(null);
+  const rotate = ref(0);
 
   const initPlayer = () => {
     player.onPlay(() => {
       playState.value = true;
       console.log('音乐开始播放了', 'playState: ' + playState.value);
+	  clearInterval(timer.value)
+	  timer.value = setInterval(() => {
+		  rotate.value += 3
+	  },200)
     });
     player.onPause(() => {
       playState.value = false;
       console.log('音乐暂停了', 'playState: ' + playState.value);
+	  clearInterval(timer.value)
     });
     player.onStop(() => {
       playState.value = false;
       console.log('音乐停止播放了', 'playState: ' + playState.value);
+	  clearInterval(timer.value)
+	  rotate.value = 0
     });
     player.onEnded(() => {
 	  player.stop()
@@ -200,6 +210,7 @@ export const usePlayerStore = defineStore('player', () => {
     duration,
     positionStr,
     durationStr,
+	rotate,
     playState,
     initPlayer,
     play,

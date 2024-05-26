@@ -16,6 +16,7 @@
           class="pic"
           :src="playerStore.currentTrackInfo.picUrl"
           mode=""
+		  :style="{ transform: 'rotate(' + playerStore.rotate + 'deg)' }"
         ></image>
       </view>
     </view>
@@ -39,7 +40,6 @@ defineProps({
     default: 'index',
   },
 });
-const rotate = ref(0);
 const playerStore = usePlayerStore();
 const handleToHome = () => {
   uni.redirectTo({
