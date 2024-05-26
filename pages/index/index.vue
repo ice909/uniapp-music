@@ -1,5 +1,10 @@
 <template>
 	<view>
+		<uni-nav-bar statusBar :border="false" shadow>
+			<view class="search-container">
+				<uni-search-bar class="search-input"  cancelButton="none" placeholder="搜索歌曲" @confirm="search"></uni-search-bar>
+			</view>
+		</uni-nav-bar>
 		<view class="content">
 			<swiper v-if="loading" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 				<swiper-item v-for="(item,index) in banners.banners" :key="index">
@@ -82,9 +87,33 @@
 		console.log(personalizeds.value)
 		console.log(personalizedNewSongs.value)
 	})
+	
+	const search = (e) => {
+		console.log(e.value)
+		uni.navigateTo({
+			url: `/pages/search/search?keyword=${e.value}`
+		})
+	}
 </script>
 
 <style lang="scss">
+	.search-container {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.search-input {
+		width: 400rpx;
+	}
+	.left-container {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 	.content {
 		height: 100%;
 		padding: 10px;
