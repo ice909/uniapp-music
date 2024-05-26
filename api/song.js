@@ -1,4 +1,4 @@
-import { request } from '@/utils/request.js';
+import { request, get } from '@/utils/request.js';
 export const personalizedNewsong = (options) => {
 	return request({
 		url: "/personalized/newsong",
@@ -8,11 +8,7 @@ export const personalizedNewsong = (options) => {
 }
 
 export const songUrl = (id) => {
-	return request({
-		url: "/song/url",
-		method: "GET",
-		data: id
-	})
+	return get("/song/url", id , true, true)
 }
 
 export const songDetail = (ids) => {
