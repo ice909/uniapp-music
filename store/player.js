@@ -42,6 +42,7 @@ export const usePlayerStore = defineStore('player', () => {
       console.log('音乐停止播放了', 'playState: ' + playState.value);
     });
     player.onEnded(() => {
+	  player.stop()
       next();
     });
     player.onTimeUpdate(() => {
