@@ -9,6 +9,7 @@
       :title="playerStore.currentTrackInfo.name"
       left-icon="left"
       :border="false"
+      background-color="rbga(0, 0, 0, 0)"
     ></uni-nav-bar>
     <view class="cover">
       <image class="pic" :src="playerStore.currentTrackInfo.picUrl"></image>
@@ -52,7 +53,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { usePlayerStore } from "@/store/player.js";
 
 const playerStore = usePlayerStore();
@@ -80,9 +81,9 @@ const seek = (e) => {
   height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.2);
   padding-bottom: 100px;
-
+  overflow: hidden;
+  background: rgba($color: #000000, $alpha: 0.15);
   .cover {
     flex: 1;
     display: flex;
