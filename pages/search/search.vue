@@ -1,7 +1,13 @@
 <template>
 	<view class="search-container">
-		<SongList style="margin-top: 5px" :songs="searchResult" :playlist-id="324214124124124" :isPaging="false"
+		<SongList v-if="!init" style="margin-top: 5px" :songs="searchResult" :playlist-id="324214124124124" :isPaging="false"
 			:loadAll="loadAll" />
+			<view v-else class="skeleton">
+				<view class="song-list">
+					<view class="item" v-for="i in 20">
+					</view>
+				</view>
+			</view>
 		<button type="primary" :loading="loading" @click="loadMore">加载更多</button>
 		<!-- 播放控制栏 -->
 		<view v-if="playerStore.playlist.length" class="player-bar" @click="toPlayer">
@@ -47,6 +53,7 @@
 	const count = ref(0);
 	const loadAll = ref(false)
 	const loading = ref(false)
+	const init = ref(true)
 
 	onLoad(async (opts) => {
 		keyword.value = opts.keyword
@@ -63,6 +70,7 @@
 		if (searchResult.value.length >= count.value) {
 			loadAll.value = true;
 		}
+		init.value = false
 	})
 
 	const loadMore = async () => {
@@ -148,6 +156,32 @@
 						height: 27px;
 					}
 				}
+			}
+		}
+		.skeleton {
+			width: 100%;
+			box-sizing: border-box;
+			padding: 10px;
+		
+			.song-list {
+				width: 100%;
+				.item {
+					margin: 10px;
+					font-size: 20px;
+					font-weight: 700;
+					background-color: #f3f3f3;
+					/* Customize width as needed */
+					height: 30px;
+					/* Customize height as needed */
+					border-radius: 5px;
+					/* Customize border radius as needed */
+					animation: loading 1s infinite alternate;
+				}
+			}
+		
+			.player-bar {
+				display: none;
+				/* Hide player bar in skeleton state */
 			}
 		}
 	}

@@ -36,7 +36,7 @@
 		}, {
 			"path": "pages/search/search",
 			"style": {
-				"navigationBarTitleText": "ËÑË÷¸èÇú",
+				"navigationBarTitleText": "æœç´¢éŸ³ä¹",
 				"enablePullDownRefresh": false
 			}
 

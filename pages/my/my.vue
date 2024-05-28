@@ -68,14 +68,31 @@
         </uni-list-item>
       </uni-list>
     </uni-card>
+	<uni-card v-if="user.isLogin" padding="0px" is-shadow>
+	  <uni-list>
+	    <uni-list-item
+		clickable
+		link
+	      title="退出登录"
+	      @click="logout"
+	    >
+	    </uni-list-item>
+	  </uni-list>
+	</uni-card>
+	<uni-popup ref="logoutDialog" type="dialog">
+					<uni-popup-dialog type="warn" cancelText="取消" confirmText="退出登录" title="退出登录" content="是否要退出登录" @confirm="logoutConfirm"
+						@close="logoutClose"></uni-popup-dialog>
+				</uni-popup>
     <MyTabbar path="my"></MyTabbar>
   </view>
 </template>
 
 <script setup>
 import { useUserStore } from "@/store/user.js";
+import { ref } from "vue"
 
 const user = useUserStore();
+const logoutDialog = ref(null);
 
 const toLogin = () => {
   if (!user.isLogin) {
@@ -84,11 +101,27 @@ const toLogin = () => {
     });
   }
 };
+
+const logoutConfirm = () => {
+	console.log("确认退出登录")
+	user.logout()
+	uni.redirectTo({
+		url: "/pages/index/index"
+	})
+}
+
+const logoutClose = () => {
+	console.log("取消退出登录")
+}
+
+const logout = () => {
+	logoutDialog.value.open()
+}
 </script>
 
 <style lang="scss">
 .my-page {
-  padding-bottom: 100px;
+  padding-bottom: 110px;
 }
 .user-card {
   display: flex;

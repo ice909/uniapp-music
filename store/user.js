@@ -58,6 +58,17 @@ export const useUserStore = defineStore('user', () => {
 			console.log("获取用户信息失败")
 		}
 	}
+	
+	const logout = () => {
+		isLogin.value = false;
+		id.value = 0;
+		nickname.value = '未登录';
+		avatar.value = '/static/avatar.png';
+		follows.value = 0;
+		followeds.value = 0;
+		level.value = 0;
+		uni.setStorageSync("cookie", "")
+	}
 
 	return {
 		isLogin,
@@ -71,6 +82,7 @@ export const useUserStore = defineStore('user', () => {
 		userCreatePlayList,
 		userLikePlayList,
 		getUserInfo,
-		checkLoginStatus
+		checkLoginStatus,
+		logout
   };
 });

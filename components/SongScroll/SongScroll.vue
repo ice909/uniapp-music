@@ -78,7 +78,12 @@
 
 					.artist {
 						display: flex;
+						width: 100%;
 						flex-direction: row;
+						display: -webkit-box;
+						-webkit-box-orient: vertical;
+						-webkit-line-clamp: 1;
+						overflow: hidden;
 					}
 				}
 			}

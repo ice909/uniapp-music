@@ -134,6 +134,10 @@ const getSongs = () => {
       .song-artist {
         font-size: 14px;
         color: #666;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
+		overflow: hidden;
       }
     }
 

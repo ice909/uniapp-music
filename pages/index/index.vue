@@ -22,7 +22,7 @@
 				</view>
 				<scroll-view scroll-x class="scroll-view">
 					<view class="list">
-						<view class="item" v-for="i in 4">
+						<view class="item" v-for="i in 4" :key="i">
 							<view class="pic"></view>
 							<view class="text"></view>
 						</view>
@@ -35,7 +35,7 @@
 				<view class="title"></view>
 				<scroll-view scroll-x class="scroll-view">
 					<view class="list">
-						<view class="item" v-for="i in 9">
+						<view class="item" v-for="i in 9" :key="i">
 							<view class="pic" ></view>
 							<view class="info">
 								<view class="name"></view>
